@@ -1,0 +1,52 @@
+simulation:
+  duration: 480  # Simulation duration in minutes (8 hours)
+
+resources:
+  - name: "Nurse"
+    capacity: 3
+    service_time_distribution:
+      type: "Normal"
+      mean: 10
+      std_dev: 2
+    schedule:
+      start: "09:00"
+      end: "17:00"
+  - name: "Admin"
+    capacity: 2
+    service_time_distribution:
+      type: "Normal"
+      mean: 5
+      std_dev: 1
+    schedule:
+      start: "09:00"
+      end: "17:00"
+  - name: "Doctor"
+    capacity: 4
+    service_time_distribution:
+      type: "Normal"
+      mean: 20
+      std_dev: 5
+    schedule:
+      start: "09:00"
+      end: "17:00"
+  - name: "Billing"
+    capacity: 2
+    service_time_distribution:
+      type: "Normal"
+      mean: 8
+      std_dev: 2
+    schedule:
+      start: "09:00"
+      end: "17:00"
+
+decision_points:
+  - name: "NurseOrAdmin"
+    branches: ["Nurse", "Admin"]
+    probabilities: [0.5, 0.5]
+
+service_sequence: ["NurseOrAdmin", "Doctor", "Billing"]
+
+patient_arrival_distribution:
+  type: "Normal"
+  mean: 5
+  std_dev: 2
